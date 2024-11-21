@@ -1,0 +1,69 @@
+
+.addressSection{
+    display: flex;
+    flex-direction: column;
+}
+
+.addressSection h4 {
+    color: #444;
+    margin: .5rem 0 .3rem 0;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.addressRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.addressRow div {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    font-weight: 700;
+}
+
+.addressRow button {
+    margin: 0.3rem 0;
+    color: #F8B602;
+    background-color: white;
+    border: #F8B602 2px solid;
+    border-radius: 0.8rem;
+    padding: 10px 15px;
+    transition: all 0.15s ease;
+}
+
+.addressRow button:hover {
+    color: white;
+    cursor: pointer;
+    background-color: #F8B602;
+}
+
+.addressSection p {
+    color: #999;
+    margin: 0.2rem;
+    font-weight: 300;
+    font-size: 0.8rem;
+    width: 100%;
+}
+
+.editButton {
+    color: #777;
+    border: #999 2px solid;
+    background-color: white;
+    border-radius: 0.8rem;
+    width: 6rem;
+    padding: 0.4rem 0.1rem;
+    transition: all 0.15s ease;
+}
+
+.editButton:hover {
+    color: white;
+    cursor: pointer;
+    background-color: #999;
+}
+

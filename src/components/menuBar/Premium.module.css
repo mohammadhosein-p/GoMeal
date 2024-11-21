@@ -1,0 +1,40 @@
+.banner {
+    position: relative;
+    border-radius: 20px;
+    width: 14rem;
+}
+
+.bannerImage {
+    z-index: -10;
+    border-radius: 20px;
+    width: 14rem;
+}
+
+.bannerText {
+    color: white;
+    position: absolute;
+    top: .5rem;
+    left: 1rem;
+    right: 1rem;
+    font-weight: 300;
+    font-size: 1.2rem;
+}
+
+.bannerButton {
+    position: absolute;
+    bottom: 4rem;
+    left: 1rem;
+    background-color: white;
+    padding: 10px 15px;
+    color: #74707a;
+    text-decoration: none;
+    border: none;
+    border-radius: 0.8rem;
+    font-weight: 700;
+    transition: all .15s ease;
+}
+
+.bannerButton:hover {
+    background-color: #c6c6c6;
+    color: white;
+}

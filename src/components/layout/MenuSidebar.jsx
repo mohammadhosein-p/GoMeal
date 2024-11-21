@@ -1,5 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import classes from "./MenuSidebar.module.css";
+import { useContext } from "react";
+import { getUserCtx } from "../../store/userContext";
+import Premium from "../menuBar/Premium";
 
 const MenuList = [
   { title: "Dashboard", icon: "dashboard", link: "/" },
@@ -11,6 +14,7 @@ const MenuList = [
 
 function Menu() {
   const location = useLocation();
+  const userCtx = useContext(getUserCtx())
 
   return (
     <div className={classes.container}>
@@ -22,26 +26,22 @@ function Menu() {
       <ul className={classes.menuContainer}>
         {MenuList.map((item) => (
           <li key={item.title}>
-            <Link
+            <NavLink
               to={item.link}
-              className={`${classes.listItem} ${location.pathname === item.link ? classes.active : ""}`}
+              className={({isActive}) => isActive ? classes.active : classes.listItem}
             >
               <img
                 src={`/menuIcon/${item.icon}.svg`}
                 alt={item.title}
-                style={{ width: "30px", color: location==item.link ? "white" : "#A098AE" }}
+                style={{ width: "30px", color: location == item.link ? "white" : "#A098AE" }}
               />
               <h3>{item.title}</h3>
-            </Link>
+            </NavLink>
           </li>
         ))}
       </ul>
 
-      <div className={classes.banner}>
-        <img src="/banner/upgrade.png" className={classes.bannerImage} />
-        <p className={classes.bannerText}>Upgrade your Account to Get Free Voucher</p>
-        <Link to='/premium' className={classes.bannerButton}>Upgrade</Link>
-      </div>
+      {!userCtx.isPremium && <Premium />}
     </div>
   );
 }

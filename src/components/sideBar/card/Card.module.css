@@ -1,0 +1,119 @@
+.orderSection h3 {
+    font-weight: 600;
+    margin: 0.7rem 0 .3rem 0;
+}
+
+.cardUl{
+    max-height: 40vh;
+    min-height: 25vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cardLi {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cardLi img {
+    width: 4rem;
+    padding: 0;
+}
+
+.cardLiDetail {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.cardLiDetail h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+
+}
+
+.cardLiDetail p {
+    margin: 0.3rem 0;
+    color: #888;
+    font-size: 0.8rem;
+}
+
+
+.total {
+    display: flex;
+    flex-direction: column;
+}
+
+.totalServicePrice {
+    display: flex;
+    color: #777;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    font-size: .9rem;
+}   
+
+.totalOrderPrice {
+    display: flex;
+    flex-direction: row;
+    color: #222;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    font-size: 1.1rem;
+}
+
+.total p {
+    margin: .3rem 0;
+}
+
+.hasCoupon {
+    color: #222;
+    text-align: center;
+}
+
+.coupon {
+    margin-top: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f6f6f6;
+    border: #F8B602 2px solid;
+    padding: 10px 5px;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    transition: all .15s ease;
+    cursor: pointer;
+
+}
+
+.coupon img {
+    width: 1.9rem;
+}
+
+.coupon:hover {
+    background-color: white;
+}
+
+.checkout {
+    color: white;
+    border: #F8B602 1px solid;
+    background-color: #F8B602;
+    transition: all .15s ease;
+    border-radius: 10px;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.checkout:hover {
+    color: #F8B602;
+    background-color: white;
+}
