@@ -1,24 +1,13 @@
-.container {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 20px;
+
+.favoriteIcon {
+    position: absolute;
+    top: 1.2rem;
+    z-index: 100;
+    width: 1.5rem;
+    right: 1.2rem;
 }
 
-
-
-.card{
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    list-style-type: none;
-    text-align: center;
-    gap: 1rem;
-    overflow-x: hidden;
-}
-
-.card li {
+.cardLi {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -52,19 +41,19 @@
 }
 
 .cardAddIcon {
-    color: white;
-    background-color: #F8B602;
-    padding: .6rem 1rem;
-    border-radius: 1rem;
     text-decoration: none;
     font-weight: bolder;
     font-size: 1.5rem;
     transition: all .15s ease;
+    display: flex;
 }
 
-.cardAddIcon:hover {
-    background-color: #999;
+.cardAddIcon img {
+    padding: .4rem .4rem;
+    border-radius: 3rem;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
 }
-
 
 

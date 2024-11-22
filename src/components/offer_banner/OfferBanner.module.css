@@ -1,0 +1,35 @@
+
+.offerContainer {
+    position: relative;
+}
+
+.offerBanner {
+    margin-top: .4rem;
+    width: 100%;
+}
+
+.offerBannerDetails {
+    position: absolute;
+    top: .5rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    left: 1rem;
+    right: 1rem;
+    bottom: .6rem;
+}
+
+.bannerText {
+    padding: 0 1.3rem;
+    color: white;
+}
+
+.bannerText h3 {
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.bannerText h5 {
+    font-size: 1rem;
+    font-weight: 300;
+}

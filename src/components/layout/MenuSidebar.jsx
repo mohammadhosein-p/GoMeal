@@ -6,7 +6,7 @@ import Premium from "../menuBar/Premium";
 
 const MenuList = [
   { title: "Dashboard", icon: "dashboard", link: "/" },
-  { title: "Food Order", icon: "foods", link: "/food" },
+  { title: "Order Food", icon: "foods", link: "/food" },
   { title: "Favorite", icon: "favorite", link: "/favorite" },
   { title: "Message", icon: "message", link: "/message" },
   { title: "About", icon: "about", link: "/about" },

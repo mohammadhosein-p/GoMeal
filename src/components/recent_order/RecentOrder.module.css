@@ -1,0 +1,77 @@
+
+.recentCard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    padding: 20px;
+    list-style-type: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    align-items: center;
+    gap: 1rem;
+    transition: all .3s ease;
+}
+
+.recentCard li{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    padding: .5rem 1.5rem;
+    padding-bottom: 1.3rem;
+    border-radius: 1.5rem;
+}
+
+.recentFoodImage {
+    width: 13rem;
+}
+
+.recentCard li h3 {
+    margin: 0.4rem;
+}
+
+.recentCard li h4 {
+    margin: 0.3rem;
+    color: #333;
+}
+
+.recentCard li h5 {
+    margin: 0;
+    color: #999;
+    font-weight: 400;
+}
+
+.categoryText {
+    margin: .8rem 1rem 0 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.categoryText h3 {
+    margin: 0;
+}
+
+.categoryText div {
+    display: flex;
+    flex-direction: row;
+    gap: .2rem;
+    text-decoration: none;
+    color: #F8B602;
+    cursor: pointer;
+}
+
+.categoryText div:hover {
+    text-decoration: underline;
+}
+
+
+.favoriteIcon {
+    position: absolute;
+    top: 1.2rem;
+    z-index: 100;
+    width: 1.5rem;
+    right: 1.2rem;
+}
