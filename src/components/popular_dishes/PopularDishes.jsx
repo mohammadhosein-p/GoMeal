@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux"
+// import { useSelector } from "react-redux"
 import classes from "./PopularDishes.module.css"
-import FoodItem from "../food_item/FoodItem"
+// import FoodItem from "../food_item/FoodItem"
 import { useState } from "react"
+import PageList from "../page_list/PageList"
 
 function PopularDishes() {
-  const foods = useSelector(state => state.data.foods)
+  // const foods = useSelector(state => state.data.foods)
   const [maximizeDishes, setMaximizeDishes] = useState(false)
   const toggleMaximizeDishes = ()=>{
     setMaximizeDishes(prevValue => prevValue ? false : true)
@@ -19,21 +20,12 @@ function PopularDishes() {
           <img src="/yellow_arrow.svg" />
         </div>
       </div>
-      <ul className={classes.card} style={{ maxHeight: maximizeDishes ? `${Math.ceil(foods.length / 3) * 20}rem` : "16rem" }} >
-        {foods.filter(food => food.isPopular).map(food => (
-          <FoodItem
-            image={food.image}
-            isFavorite={food.isFavorite}
-            isOrdered={true}
-            price={food.price}
-            stars={food.stars}
-            title={food.title}
-            key={food.title}
-            isPopular={food.isPopular}
-            offerPercentage={food.offerPercentage}
-          />
-        ))}
-      </ul>
+      <PageList 
+        filterBy="isPopular"
+        heightPerRow={20}
+        isMaximized={maximizeDishes}
+        minHeight={16}
+      />
     </div>
   )
 }

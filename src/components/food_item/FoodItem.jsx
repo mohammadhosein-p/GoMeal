@@ -1,12 +1,19 @@
 /* eslint-disable react/prop-types */
+import { useDispatch } from "react-redux"
 import classes from "./FoodItem.module.css"
+import { dataActions } from "../../store/dataRedux"
 
-function FoodItem({ image, stars, title, price, isFavorite, isOrdered, offerPercentage, isPopular }) {
+function FoodItem({ image, stars, title, price, isFavorite, isOrdered, offerPercentage, isPopular, toggleCard, count }) {
+  const dispatch = useDispatch()
+  const toggleFavorite = () => {
+    dispatch(dataActions.toggleFavorite(title))
+  }
+  
   return (
     <li className={classes.cardLi}>
-      <a href="#">
+      <div onClick={toggleFavorite}>
         <img src={isFavorite ? "/card/red_heart.svg" : "/card/gray_heart.svg"} className={classes.favoriteIcon} />
-      </a>
+      </div>
       <img src={image} className={classes.foodImage} />
       {isPopular && <span className={classes.cardOffer}>{offerPercentage}% Off</span>}
       <div className="stars">
@@ -18,9 +25,16 @@ function FoodItem({ image, stars, title, price, isFavorite, isOrdered, offerPerc
           <br />
           <span><span style={{ color: "#F8B602" }}>$</span>{price.toFixed(2)}</span>
         </div>
-        <a href="/" className={classes.cardAddIcon}>
-          <img src={isOrdered ? "/card/remove.svg" : "/card/add.svg"} style={{backgroundColor: isOrdered ? "#999" : "#F8B602"}} />
-        </a>
+        <div className={classes.cardAddIcon}>
+          {isOrdered ? 
+            <div className={classes.changeCount}>
+              <span onClick={() => toggleCard(title, "add")}>+</span>
+              <span>{count}</span>
+              <span onClick={() => toggleCard(title, "remove")}>-</span>
+            </div> :
+            <img onClick={() => toggleCard(title, "add")} src="/card/add.svg" />
+          }
+        </div>
       </div>
     </li>
   )

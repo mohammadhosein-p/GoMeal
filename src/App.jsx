@@ -3,6 +3,7 @@ import Layout from "./components/layout/LayOut"
 import HomePage from "./components/pages/HomePage"
 import "./App.css"
 import FavoritePage from "./components/pages/FavoritePage"
+import OrderFood from "./components/pages/OrderFood"
 
 
 const router = createBrowserRouter([
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/food',
-        element: <HomePage />
+        element: <OrderFood />
       },
       {
         path: "/favorite",

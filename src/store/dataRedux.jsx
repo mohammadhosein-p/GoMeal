@@ -12,7 +12,7 @@ const initialState = {
       isFavorite: true,
       image: '/card/hamber.png',
       stars: 5,
-      title: "Hamber1",
+      title: "pizza",
       price: 5,
       isPopular: true,
       offerPercentage: 15,
@@ -223,41 +223,49 @@ const dataSlice = createSlice({
   reducers: {
     addToCard(state, action) {
       const itemToAdd = action.payload;
-      state.card = [...state.card, itemToAdd]
-      state.total += itemToAdd.count * itemToAdd.price
-    },
-    
-    increaseCount(state, action) {
-      const { itemToIncrease, newCount } = action.payload
-      const currentItem = state.card.filter(v => v.title == itemToIncrease)
-      state.total += currentItem.price * (newCount - currentItem.count)
-      currentItem.count = newCount
-      state.card = [...state.card, currentItem]
+      const existingItem = state.card.find((elem) => elem.title === itemToAdd);
+      if (existingItem) {
+        if (existingItem.count > 14) {
+          return
+        }
+        existingItem.count += 1;
+      } else {
+        const item = state.foods.find((elem) => elem.title === itemToAdd);
+        if (item) {
+          state.card.push({
+            title: item.title,
+            price: item.price,
+            image: item.image,
+            count: 1,
+          });
+        }
+      }
+      const addedItem = state.foods.find((elem) => elem.title === itemToAdd);
+      if (addedItem) {
+        state.total += addedItem.price;
+      }
     },
     
     removeFromCard(state, action) {
       const itemToRemove = action.payload;
-      const item = state.card.find(v => v.title == itemToRemove)
-      state.total -= item.count * item.price
-      state.card = state.card.filter(v => v.title !== itemToRemove)
-    },
-
-    addFoodAndFavrite(state, action) {
-      const { foods, favorite } = action.payload;
-      const updatedFoods = foods.map((food) => ({
-        ...food,
-        isFavorite: favorite.includes(food.title),
-      }));
-      state.foods = updatedFoods;
-    },
+      const existingItem = state.card.find((elem) => elem.title === itemToRemove);
+      state.total -= existingItem.price;
     
-    toggleFavorite(state, action) {
-      const food = state.foods.find((food) => food.title === action.payload);
-      if (food) {
-        food.isFavorite = !food.isFavorite;
+      if (existingItem && existingItem.count > 1) {
+        existingItem.count -= 1;
+      } else {
+        state.card = state.card.filter( elem => elem.title !== itemToRemove)
       }
     },
     
+    toggleFavorite(state, action) {
+      state.foods = state.foods.map((food) =>
+        food.title === action.payload
+          ? { ...food, isFavorite: !food.isFavorite }
+          : food
+      );
+    },
+            
     addRecentOrders(state, action) {
       const orders = action.payload
       state.recentOrder = [...state.recentOrder, orders]
