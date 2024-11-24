@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import classes from "./PageList.module.css";
 import FoodItem from "../food_item/FoodItem";
 import { dataActions } from "../../store/dataRedux";
+import { useSearchParams } from "react-router-dom";
 
 function PageList({ filterBy, isMaximized, minHeight, heightPerRow }) {
   const foods = useSelector((state) => state.data.foods);
   const card = useSelector((state) => state.data.card);
   const dispatch = useDispatch()
+  const [searchParams] = useSearchParams()
 
   const calcedFood = foods.map((food) => {
     const cardItem = card.find((elem) => elem.title=== food.title)
@@ -15,11 +17,13 @@ function PageList({ filterBy, isMaximized, minHeight, heightPerRow }) {
     else return { ...food, isOrdered:false, count: 0 };
   });
 
+
   const filteredFoods = calcedFood.filter((food) => {
     if (filterBy === "isFavorite") return food.isFavorite;
     if (filterBy === "isPopular") return food.isPopular;
     if (filterBy === "offer") return food.offerPercentage > 0;
     if (filterBy?.category) return food.category === filterBy.type;
+    if (searchParams.get("filterBy")) return food.category === searchParams.get("filterBy");
     return true;
   });
 

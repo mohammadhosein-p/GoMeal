@@ -16,7 +16,7 @@ const initialState = {
       price: 5,
       isPopular: true,
       offerPercentage: 15,
-      category: "burger",
+      category: "pizza",
     },
     {
       isFavorite: true,
@@ -265,7 +265,7 @@ const dataSlice = createSlice({
           : food
       );
     },
-            
+
     addRecentOrders(state, action) {
       const orders = action.payload
       state.recentOrder = [...state.recentOrder, orders]

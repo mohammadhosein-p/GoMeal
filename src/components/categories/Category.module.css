@@ -33,16 +33,12 @@
     margin: 0.3rem 2rem;
     list-style-type: none;
     overflow: hidden;
-    max-height: 8rem;
+    padding: .3rem;
     transition: max-height 0.3s ease;
 }
-  
-.categoriesContainerMaxed {
-    max-height: 20rem;
-}
-  
 
-.categoriesContainer li {
+.categoryItem{
+    text-decoration: none;
     gap: 1rem;
     color: #555;
     display: flex;

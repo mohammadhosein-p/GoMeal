@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 import classes from "./Category.module.css"
 import { useState } from "react"
+import CategoryItem from "./CategoryItem"
 
 function Category() {
   const categories = useSelector(state => state.data.category)
@@ -19,12 +20,12 @@ function Category() {
           <img src="/yellow_arrow.svg" />
         </div>
       </div>
-      <ul className={`${classes.categoriesContainer} ${ isViewAllEnabled && classes.categoriesContainerMaxed}`}>
-        {categories.map(item => <li key={item.title}>
-          <img src={item.image} />
-          <span>{item.title}</span>
-        </li>
-        )}
+      <ul className={classes.categoriesContainer} style={{maxHeight: isViewAllEnabled ? "20rem": "8rem"}}>
+        {categories.map(item => <CategoryItem 
+          image={item.image}
+          title={item.title}
+          key={item.title}
+        />)}
       </ul>
     </div>
   )
