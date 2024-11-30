@@ -3,7 +3,7 @@ import classes from "./Card.module.css"
 
 
 function CardOverView() {
-  const cardList = useSelector(state => state.data.card)
+  const cardList = useSelector(state => state.data.card)  
 	return (
 		<ul className={classes.cardUl}>
 			{cardList.map(item => <li key={item.title} className={classes.cardLi}>

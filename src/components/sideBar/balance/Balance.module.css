@@ -52,3 +52,64 @@
     top: 6rem;
     left: 13rem;
 }
+
+
+.modalContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    padding: 2rem;
+}
+
+.modal {
+    width: 30%;
+}
+
+.modal h3 {
+    margin: 0;
+    margin-bottom: 2rem;
+    color: #111;
+}
+
+.modal p {
+    width: 100%;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal input {
+    border-radius: .5rem;
+    padding: .2rem .5rem;
+    height: 2rem;
+    margin: 1rem 4rem 1rem 0;
+    width: 20%;
+    border: .1rem solid #999;
+}
+
+.modal form button {
+    background-color: #F8B602;
+    color: white;
+    border: .1rem solid #F8B602;
+    cursor: pointer;
+    border-radius: .4rem;
+    padding: .5rem 1.2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all .15s ease;
+}
+
+.modal form button:hover {
+    background-color: #e3e3e3;
+    color: #F8B602;
+}
+
+.error {
+    margin: 1rem 0 0 2rem;
+    color: rgb(168, 9, 9);
+    font-size: 1rem;
+}

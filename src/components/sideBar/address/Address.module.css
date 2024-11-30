@@ -67,3 +67,68 @@
     background-color: #999;
 }
 
+.modalContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    padding: 2rem;
+}
+
+.editAddressModal {
+    width: 40%;
+}
+
+.editAddressModal h3 {
+    margin: 0;
+    margin-bottom: 2rem;
+    color: #111;
+}
+
+.editAddressModal h5 {
+    color: #222;
+    margin: 0;
+}
+
+.editAddressModal p {
+    color: #333;
+    font-weight: 400;
+    margin: 1rem 0 1rem 0;
+}
+
+.editAddressModal form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editAddressModal input {
+    border-radius: .5rem;
+    padding: .2rem .5rem;
+    height: 2rem;
+    width: 60%;
+    border: .1rem solid #999;
+}
+
+.editAddressModal form button {
+    background-color: #F8B602;
+    color: white;
+    border: .1rem solid #F8B602;
+    cursor: pointer;
+    border-radius: .4rem;
+    padding: .5rem 1.2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all .15s ease;
+}
+
+.editAddressModal form button:hover {
+    background-color: #e3e3e3;
+    color: #F8B602;
+}
+
+.error {
+    margin: 1rem 0 0 2rem;
+    color: rgb(168, 9, 9);
+    font-size: 1rem;
+}

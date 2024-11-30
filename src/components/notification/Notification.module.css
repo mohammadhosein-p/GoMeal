@@ -1,0 +1,26 @@
+.container {
+  position: fixed;
+  top: 3rem;
+  right: 40%;
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease-out;
+  transform: translateY(-100%);
+  width: 20rem;
+  opacity: 0;
+}
+
+.show {
+  box-shadow: 0 0 0;
+  transform: translateY(20px);
+  opacity: 1;
+}
+
+.hide {
+  box-shadow: 0 0 0;
+  background-color: transparent;
+  transform: translateY(-100%);
+  opacity: 0;
+}
