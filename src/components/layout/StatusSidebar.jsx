@@ -7,13 +7,8 @@ function StatusSidebar() {
   return (
     <div className={classes.container}>
       <Balance />
-
       <Address />
-
       <Card />
-
-      
-
     </div>
   )
 }

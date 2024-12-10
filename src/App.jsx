@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import Layout from "./components/layout/LayOut"
-import HomePage from "./components/pages/HomePage"
+import Layout, { loader as mainLoader } from "./components/layout/Layout"
+import HomePage, { foodLoader } from "./components/pages/HomePage"
 import "./App.css"
 import FavoritePage from "./components/pages/FavoritePage"
 import OrderFood from "./components/pages/OrderFood"
@@ -9,10 +9,12 @@ import OrderFood from "./components/pages/OrderFood"
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    loader: mainLoader,
     children: [
       {
         path: "/",
-        element: <HomePage />
+        element: <HomePage />,
+        loader: foodLoader,
       },
       {
         path: '/food',
@@ -31,3 +33,4 @@ function App() {
 }
 
 export default App
+

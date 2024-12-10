@@ -40,7 +40,7 @@ function RecentOrderItem({ image, isFavorite, title, price, date }) {
       <h3>{title}</h3>
       <h4>
         <span style={{ color: "#F8B602" }}>$</span>
-        {price.toFixed(2)}
+        {price?.toFixed(2)}
       </h4>
       <h5>{timeAgo}</h5>
     </li>

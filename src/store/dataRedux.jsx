@@ -1,226 +1,26 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  card: [{
-    image: "/pizza.png",
-    title: "pizza",
-    count: 5,
-    price: 5,
-  }],
-  foods: [
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      stars: 5,
-      title: "pizza",
-      price: 5,
-      isPopular: true,
-      offerPercentage: 15,
-      category: "pizza",
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      stars: 3,
-      title: "Hamber2",
-      price: 10,
-      isPopular: true,
-      offerPercentage: 20,
-      category: "burger",
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: false,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: false,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: false,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: false,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: false,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: false,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: false,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: false,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-    {
-      isFavorite: false,
-      image: '/card/hamber.png',
-      stars: 4,
-      title: "Hamber3",
-      price: 15,
-      isPopular: true,
-      offerPercentage: 0,
-      category: "burger",
-    },
-  ],
-  category: [
-    { image: '/category/pizza.svg', title: 'Pizza' },
-    { image: '/category/burger.svg', title: 'Burger' },
-    { image: '/category/coffee.svg', title: 'Coffee' },
-    { image: '/category/fish.svg', title: 'Fish' },
-    { image: '/category/chicken.svg', title: 'Chicken' },
-    { image: '/category/bakery.svg', title: 'Bakery' },
-  ],
-  recentOrder: [
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      title: "Hamber1",
-      price: 5,
-      date: new Date(2024, 10, 22, 18, 24)
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      title: "Hamber1",
-      price: 5,
-      date: new Date(2024, 10, 22, 18, 24)
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      title: "Hamber1",
-      price: 5,
-      date: new Date(2024, 10, 22, 18, 24)
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      title: "Hamber1",
-      price: 5,
-      date: new Date(2024, 10, 22, 18, 24)
-    },
-    {
-      isFavorite: true,
-      image: '/card/hamber.png',
-      title: "Hamber1",
-      price: 5,
-      date: new Date(2024, 10, 22, 18, 24)
-    },
-  ],
-  total: 25,
+  card: [],
+  foods: [],
+  category: [],
+  recentOrder: [],
+  total: 0,
+  userName: "reza1",
 }
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    addAllFood(state, action) {
+      state.foods = action.payload.data
+    },
+
+    changeUserName(state, action) {
+      state.userName = action.payload.name
+    },
+
     addToCard(state, action) {
       const itemToAdd = action.payload;
       const existingItem = state.card.find((elem) => elem.title === itemToAdd);
@@ -274,6 +74,20 @@ const dataSlice = createSlice({
     addAllCategories(state, action) {
       state.category = action.payload
     },
+
+    addAllRecent(state, action) {
+      const rawOrders = action.payload;
+      const finalRecentOrder = rawOrders.map(order => {
+        const isFavorite = state.foods.some(food => food.title === order.title && food.isFavorite);
+        return {
+          ...order,
+          isFavorite
+        };
+      });
+    
+      state.recentOrder = finalRecentOrder;
+    }
+    
   }
 })
 
