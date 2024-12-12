@@ -21,6 +21,7 @@ function Layout() {
         userCtx.toggleIsPremium()
         userCtx.changeUsername(loaderData.user.name)
         dispatch(dataActions.addRecentOrders(loaderData.user.recentOrder))
+        dispatch(dataActions.addAllFavorite(loaderData.user.favorite))
     }, [loaderData])
 
     return (
@@ -49,6 +50,5 @@ export const loader = async () => {
         throw new Error("user not found!");
     }
 
-    console.log(data)
     return data;
 };

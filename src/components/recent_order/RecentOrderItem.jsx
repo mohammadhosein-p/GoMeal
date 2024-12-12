@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
+import { useDispatch } from "react-redux";
 import classes from "./RecentOrder.module.css";
+import { dataActions } from "../../store/dataRedux";
 
 function RecentOrderItem({ image, isFavorite, title, price, date }) {
-  
+  const dispatch = useDispatch()
   const now = new Date().getTime(); 
   const orderDate = new Date(date).getTime(); 
   const diffInMs = now - orderDate; 
@@ -28,14 +30,18 @@ function RecentOrderItem({ image, isFavorite, title, price, date }) {
     timeAgo = "a few moments ago"
   }
 
+  const toggleFavorite = () => {
+    dispatch(dataActions.toggleFavorite(title))
+  }
+
   return (
     <li>
-      <a href="#">
+      <div onClick={toggleFavorite}>
         <img
           src={isFavorite ? "/card/red_heart.svg" : "/card/gray_heart.svg"}
           className={classes.favoriteIcon}
         />
-      </a>
+      </div>
       <img src={image} className={classes.recentFoodImage} />
       <h3>{title}</h3>
       <h4>

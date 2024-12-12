@@ -7,7 +7,7 @@ function Header() {
   const userCtx = useContext(getUserCtx())
   return (
     <div className={classes.greeting}>
-      <span>Hello, {userCtx.username || "New user!"}</span>
+      <span>Hello, {userCtx.username}</span>
       <div className={classes.search}>
         <a href="#"><img src="/search.svg" /></a>
         <input type="text" placeholder="What do you want eat today..." />

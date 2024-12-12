@@ -44,5 +44,5 @@ export const foodLoader = async () => {
     throw new Error("user not found!");
   }
 
-  return data;
+  return { data };
 }

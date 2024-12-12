@@ -3,12 +3,44 @@ import classes from "./Balance.module.css"
 import { getUserCtx } from "../../../store/userContext"
 import Modal from "../../modal/Modal"
 import Notification from "../../notification/Notification"
+import { useMutation } from "@tanstack/react-query"
+import { sendHttp } from "../../../http/sendHttp"
 
 function Balance() {
   const userCtx = useContext(getUserCtx())
   const [isTopupActive, setTopup] = useState(false)
   const [isTransferActive, setTransfer] = useState(false)
   const [message, setMessage] = useState({ isActive: false, title:"", text: "", type:"" })
+  let {mutate, isError, error, isLoading} = useMutation({
+    mutationKey: ["balance"],
+    mutationFn: (data) => {
+      if(data.balance >= 1000) {
+        throw new Error("maximum balance is 1000")
+      }
+
+      if(data.balance < 0) {
+        const userBalance = userCtx.balance
+        throw new Error(`value must be less than ${userBalance}`)
+      }
+      const result = sendHttp("http://localhost:3000/balance", {
+        name: userCtx.username,
+        balance: data.balance
+      }, "PUT")
+      return result
+    },
+    onSuccess: (result, data) => {
+      if(result?.acknowledged) {
+        userCtx.changeBalance(data.balance)
+        setTopup(false)
+        setTransfer(false)
+        setMessage({ isActive: true, title: "Success", type:"success", text:"balance updated successfully!" })
+      }
+    },
+    onError: (err) => {
+      console.log(err)
+    }
+
+  })
 
   const changeBalance = (e, type) => {
     e.preventDefault();
@@ -16,20 +48,17 @@ function Balance() {
     const amount = parseFloat(data.get("text"))
   
     if (isNaN(amount) || amount <= 0) {
-      console.error("Invalid input");
       return;
     }
-  
+    
+    let newBalance = 0;
     if (type === "topup") {
-      const newBalance = userCtx.balance + amount;
-      userCtx.changeBalance(newBalance);
-      setTopup(false);
+      newBalance = userCtx.balance + amount;
     } else if (type === "transfer") {
-      const newBalance = userCtx.balance - amount;
-      userCtx.changeBalance(newBalance);
-      setTransfer(false);
+      newBalance = userCtx.balance - amount;
     }
-    setMessage({ isActive: true, title: "Success", type:"success", text:"balance updated successfully!" })
+
+    if(newBalance) mutate({ balance: newBalance })
   };
   
 
@@ -41,7 +70,7 @@ function Balance() {
         <div className={classes.balanceCurrent}>
           <span style={{ fontSize: "1rem", color: "#666" }}>Balance</span>
           <br />
-          <span style={{ fontSize: "1.5rem", fontWeight: 700 }}>${userCtx.balance.toFixed(2)}</span>
+          <span style={{ fontSize: "1.3rem", fontWeight: 700 }}>${userCtx.balance?.toFixed(2)}</span>
         </div>
         <div className={classes.topupSection} >
           <img className={classes.topupIcon} src="/balance/import.svg" onClick={() => setTopup(true)} />
@@ -63,33 +92,33 @@ function Balance() {
 
       <Modal
         isOpen={isTopupActive}
-        onClose={() => setTopup(false)}
+        onClose={() => { setTopup(false); error="" }}
         className={classes.modal}
       >
         <div className={classes.modalContainer}>
           <h3>Top Up</h3>
           <p>How much you want to deposit?</p>
           <form onSubmit={e => changeBalance(e, "topup")}>
-            <input type="number" name="text" min={0} max={100} step={0.1} />
-            <button>submit</button>
+            <input type="number" name="text" min={0} step={0.1} />
+            {isLoading ? <p>fetching...</p> : <button>submit</button>}
           </form>
-          <h6 className={classes.error} style={{ display: "none" }}>error</h6>
+          {isError && <h6 className={classes.error}>{error.message}</h6>}
         </div>
       </Modal>
       <Modal
         isOpen={isTransferActive}
-        onClose={() => setTransfer(false)}
+        onClose={() => {setTransfer(false); error = ""}}
         className={classes.modal}
       >
         <div className={classes.modalContainer}>
           <h3>Transfer</h3>
           <p>How much you want to withdrawal?</p>
           <form onSubmit={e => changeBalance(e, "transfer")}>
-            <input type="number" name="text" min={0} max={userCtx.balance.toFixed(1)} step={0.1} />
-            <button>submit</button>
+            <input type="number" name="text" min={0} step={0.1} />
+            {isLoading ? <p>fetching...</p> : <button>submit</button>}
           </form>
-          <h6 className={classes.error} style={{ display: "none" }}>error</h6>
-        </div>
+            {isError && <h6 className={classes.error}>{error.message}</h6>}
+          </div>
       </Modal>
     </>
   )

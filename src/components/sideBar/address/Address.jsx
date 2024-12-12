@@ -3,24 +3,47 @@ import classes from "./Address.module.css"
 import { getUserCtx } from "../../../store/userContext"
 import Modal from "../../modal/Modal"
 import Notification from "../../notification/Notification"
+import { useMutation } from "@tanstack/react-query"
+import { sendHttp } from "../../../http/sendHttp"
 
 function Address() {
   const userCtx = useContext(getUserCtx())
   const [isEditDetailActive, setEditModal] = useState(false)
   const [isEditAddressActive, setEditAddress] = useState(false)
   const [message, setMessage] = useState({ isActive: false, title: "", text: "", type: "" })
+  const { error, isError, mutate, isLoading } = useMutation({
+    mutationKey: ["address, addressDetail"],
+    mutationFn: ({ address, addressDetail }) => {
+      const result = sendHttp("http://localhost:3000/address", {
+        name: userCtx.username,
+        address,
+        addressDetail
+      }, "PUT")
+      return result
+    },
+    onSuccess: (result, data) => {
+      console.log(result, "ewfgweifugweiugw")
+      if(result?.acknowledged) {
+        setEditModal(false)
+        setMessage({ isActive: true, title: "Success", type: "success", text: "address updated successfully!" })
+        setEditAddress(false)
+        userCtx.changeAddress(data.address)
+        userCtx.changeAddressDetail(data.addressDetail)
+      }
+    },
+    onError: (err) => {
+      console.log(err)
+    }
+  })
 
   const changeAddress = (e, type) => {
     e.preventDefault()
     const data = new FormData(e.target)
     if (type == "address") {
-      userCtx.changeAddress(data.get("text"))
-      setEditAddress(false)
+      mutate({ address: data.get("text"), addressDetail: userCtx.addressDetail })
     } else {
-      setEditModal(false)
-      userCtx.changeAddressDetail(data.get("text"))
+      mutate({ addressDetail: data.get("text"), address: userCtx.address })
     }
-    setMessage({ isActive: true, title: "Success", type: "success", text: "address updated successfully!" })
   }
 
 
@@ -53,10 +76,12 @@ function Address() {
         <div className={classes.modalContainer}>
           <h3>you can edit your address detail here</h3>
           <form onSubmit={(e) => changeAddress(e, "address-detail")}>
-            <input type="text" name="text" defaultValue={userCtx.addressDetail} maxLength={100} />
-            <button>submit</button>
+            <input type="text" name="text" maxLength={100} />
+            {isLoading ? <p>fetching...</p> : <button>submit</button>}
           </form>
-          <h6 className={classes.error} style={{ display: "none" }}>error</h6>
+          {isError &&
+            <h6 className={classes.error}>{error.message}</h6>
+          }
         </div>
       </Modal>
       <Modal
@@ -67,10 +92,12 @@ function Address() {
         <div className={classes.modalContainer}>
           <h3>You can edit your address here</h3>
           <form onSubmit={(e) => changeAddress(e, "address")}>
-            <input type="text" name="text" defaultValue={userCtx.address} maxLength={18} />
-            <button>submit</button>
+            <input type="text" name="text" maxLength={18} />
+            {isLoading ? <p>fetching...</p> : <button>submit</button>}
           </form>
-          <h6 className={classes.error} style={{ display: "none" }}>error</h6>
+          {isError && 
+            <h6 className={classes.error}>{error.message}</h6>
+          }
         </div>
       </Modal>
 

@@ -127,6 +127,11 @@
     color: #F8B602;
 }
 
+.editAddressModal form p {
+    padding: .5rem 1.2rem;
+    margin: 0;
+}
+
 .error {
     margin: 1rem 0 0 2rem;
     color: rgb(168, 9, 9);

@@ -8,14 +8,19 @@ import { useSearchParams } from "react-router-dom";
 function PageList({ filterBy, isMaximized, minHeight, heightPerRow }) {
   const foods = useSelector((state) => state.data.foods);
   const card = useSelector((state) => state.data.card);
+  const favorite = useSelector((state) => state.data.favorite)
   const dispatch = useDispatch()
   const [searchParams] = useSearchParams()
+  let calcedFood
 
-  const calcedFood = foods.map((food) => {
+  if(foods) {
+    calcedFood = foods?.map((food) => {
     const cardItem = card.find((elem) => elem.title=== food.title)
-    if (cardItem) return { ...food, isOrdered: true, count:cardItem.count}
-    else return { ...food, isOrdered:false, count: 0 };
-  });
+    const isFavorite = favorite.find((elem) => elem == food.title)
+      if (cardItem) return { ...food, isOrdered: true, count:cardItem.count, isFavorite: isFavorite || false}
+      else return { ...food, isOrdered:false, count: 0, isFavorite: isFavorite || false };
+    });
+  }
 
 
   const filteredFoods = calcedFood.filter((food) => {
@@ -26,6 +31,7 @@ function PageList({ filterBy, isMaximized, minHeight, heightPerRow }) {
     if (searchParams.get("filterBy")) return food.category === searchParams.get("filterBy");
     return true;
   });
+
 
   const toggleCard = (title, action) => {
     if(action == 'add') {

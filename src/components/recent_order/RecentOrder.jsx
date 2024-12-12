@@ -9,24 +9,32 @@ import Notification from "../notification/Notification"
 
 function RecentOrder() {
   const userName = useSelector(state => state.data.userName)
+  const favorite = useSelector(state => state.data.favorite)
   const dispatch = useDispatch()
   const [isMaximized, setIsMaximized] = useState(false)
   const [hasError, setHasError] = useState(false)
+  let calcedRecent
+  
   const toggleMaxmize = () => { setIsMaximized(prevValue => prevValue ? false : true) }
 
   const {data, isError, isLoading, error} = useQuery({
     queryKey: ['recent'],
     queryFn: () => sendHttp("http://localhost:3000/recent", `name=${userName}`),
-    onSuccess: (data) => {
-      console.log(data)
-      dispatch(dataActions.addAllRecent(data.recent))},
+    onSuccess: data => dispatch(dataActions.addAllRecent(data.recent)),
     staleTime: 1000 * 60 * 5
   })
 
+  
   useEffect(()=>{
     if(isError) setHasError(true)
-  }, [isError])
-
+    }, [isError])
+  
+  if(data) {
+    calcedRecent = data?.recent.map(order => {
+      const isFavorite = favorite.find(title => order.title == title)
+      return { ...order, isFavorite }
+    })
+  }
 
   return (
     <>
@@ -43,10 +51,8 @@ function RecentOrder() {
       {isLoading && <p style={{display: "block", textAlign: "center"}}>Fetching recent orders...</p>}
 
       <ul className={classes.recentCard} style={{ maxHeight: isMaximized ? `${Math.ceil(data.length / 3) * 17.5}rem` : "16rem" }}>
-        {data?.recent.map(order => {
-        console.log(order.date)
+        {calcedRecent?.map(order => {
         const date = new Date(order.date)
-        console.log(date)
         return <RecentOrderItem
           date={date}
           image={order.image}

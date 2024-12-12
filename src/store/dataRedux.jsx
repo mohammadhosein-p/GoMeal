@@ -5,8 +5,9 @@ const initialState = {
   foods: [],
   category: [],
   recentOrder: [],
+  favorite: [],
   total: 0,
-  userName: "reza1",
+  userName: "reza4",
 }
 
 const dataSlice = createSlice({
@@ -14,7 +15,7 @@ const dataSlice = createSlice({
   initialState,
   reducers: {
     addAllFood(state, action) {
-      state.foods = action.payload.data
+      state.foods = action.payload.data.data
     },
 
     changeUserName(state, action) {
@@ -59,11 +60,13 @@ const dataSlice = createSlice({
     },
     
     toggleFavorite(state, action) {
-      state.foods = state.foods.map((food) =>
-        food.title === action.payload
-          ? { ...food, isFavorite: !food.isFavorite }
-          : food
-      );
+      const itemToToggle = action.payload
+      const isFavorite = state.favorite.find(title => itemToToggle == title)
+      if(isFavorite) {
+        state.favorite = state.favorite.filter(title => itemToToggle !== title)
+      } else {
+        state.favorite = [...state.favorite, itemToToggle]
+      }
     },
 
     addRecentOrders(state, action) {
@@ -76,16 +79,11 @@ const dataSlice = createSlice({
     },
 
     addAllRecent(state, action) {
-      const rawOrders = action.payload;
-      const finalRecentOrder = rawOrders.map(order => {
-        const isFavorite = state.foods.some(food => food.title === order.title && food.isFavorite);
-        return {
-          ...order,
-          isFavorite
-        };
-      });
-    
-      state.recentOrder = finalRecentOrder;
+      state.recentOrder = action.payload.data
+    },
+
+    addAllFavorite(state, action) {
+      state.favorite = action.payload
     }
     
   }
