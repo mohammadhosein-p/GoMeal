@@ -22,7 +22,6 @@ function Address() {
       return result
     },
     onSuccess: (result, data) => {
-      console.log(result, "ewfgweifugweiugw")
       if(result?.acknowledged) {
         setEditModal(false)
         setMessage({ isActive: true, title: "Success", type: "success", text: "address updated successfully!" })

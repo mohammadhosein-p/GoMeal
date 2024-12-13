@@ -77,6 +77,7 @@
 .hasCoupon {
     color: #222;
     text-align: center;
+    cursor: pointer;
 }
 
 .coupon {
@@ -138,7 +139,7 @@
 
 .modalContainer span {
     margin-top: 1rem;
-    font-size: 1.3rem;
+    font-size: 1rem;
     margin-bottom: 1rem;
 }
 
@@ -171,4 +172,26 @@
     color: red;
     margin: .2rem 0 0 0;
     display: none;
+}
+
+.modalButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: .5rem;
+}
+
+.modalButtonContainer button {
+    color: white;
+    background-color: #F8B602;
+    border: 1px solid #F8B602;
+    border-radius: .5rem;
+    transition: all .15s ease;
+    font-size: 1rem;
+    padding: .3rem .5rem;
+}
+
+.modalButtonContainer button:hover {
+    background-color: white;
+    color: #F8B602;
 }

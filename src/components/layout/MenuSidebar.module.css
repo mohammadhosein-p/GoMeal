@@ -50,3 +50,47 @@
     color: white;
 }
 
+
+.modal {
+    width: 30%;
+}
+
+.modalContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.modalContainer h3 {
+    font-size: 1rem;
+}
+
+.modalError {
+    color: red;
+    margin: .2rem 0 0 0;
+    display: none;
+}
+
+.modalButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: .5rem;
+}
+
+.modalButtonContainer button {
+    color: white;
+    background-color: #F8B602;
+    border: 2px solid #F8B602;
+    border-radius: .5rem;
+    transition: all .15s ease;
+    font-size: 1rem;
+    padding: .3rem .5rem;
+    cursor: pointer;
+}
+
+.modalButtonContainer button:hover {
+    background-color: transparent;
+    color: #F8B602;
+}

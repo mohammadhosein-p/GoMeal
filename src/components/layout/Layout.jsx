@@ -18,7 +18,7 @@ function Layout() {
         userCtx.changeAddress(loaderData.user.address)
         userCtx.changeAddressDetail(loaderData.user.addressDetail)
         userCtx.changeBalance(loaderData.user.balance)
-        userCtx.toggleIsPremium()
+        userCtx.toggleIsPremium(loaderData.user.isPremium)
         userCtx.changeUsername(loaderData.user.name)
         dispatch(dataActions.addRecentOrders(loaderData.user.recentOrder))
         dispatch(dataActions.addAllFavorite(loaderData.user.favorite))

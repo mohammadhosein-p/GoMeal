@@ -4,19 +4,35 @@ import CardOverView from "./CardOverView"
 import { getUserCtx } from "../../../store/userContext"
 import { useSelector } from "react-redux"
 import Modal from "../../modal/Modal"
+import { useMutation } from "@tanstack/react-query"
+import { sendHttp } from "../../../http/sendHttp"
 
 function Card() {
   const [isEnterCouponEnabled, setEnterCouponEnable] = useState(false)
+  const [isRemoveCouponEnabled, setRemoveCouponEnable] = useState(false)
   const userCtx = useContext(getUserCtx())
   const total = useSelector(state => state.data.total)
-  const calcedTotalPrice = userCtx.hasCoupon ? ((total * (100 - userCtx.couponPercentage) / 100) + userCtx.servicePrice).toFixed(2) : (total + userCtx.servicePrice).toFixed(2)
+  let calcedTotalPrice = total.toFixed(2)
+  calcedTotalPrice -= userCtx.hasCoupon ? (total *( userCtx.couponPercentage / 100)).toFixed(2) : 0;
+  calcedTotalPrice -= userCtx.isPremium ? (total * 0.05).toFixed(2) : 0;
+
+  const { mutate, isError, isLoading, error } = useMutation({
+    mutationKey: ["coupon"],
+    mutationFn: (data) => {
+      const result = sendHttp("http://localhost:3000/coupon", `coupon=${data.coupon}`)
+      return result
+    },
+    onSuccess: (result) => {
+      userCtx.toggleHasCoupon(result.percentage)
+      setEnterCouponEnable(false)
+    },
+    onError: (err) => console.log(err),
+  })
 
   const checkCoupon = (e) => {
     e.preventDefault()
     const data = new FormData(e.target)
-    if(data.get("text")) {
-      userCtx.toggleHasCoupon(20)
-    }
+    mutate({ coupon: data.get("text") })
   }
 
   return (
@@ -31,17 +47,27 @@ function Card() {
           <div><p>service</p></div>
           <div><p>+<span style={{ color: "#F8B602" }}>$</span>{userCtx.servicePrice.toFixed(2)}</p></div>
         </div>
-        {userCtx.hasCoupon && <div className={classes.totalServicePrice}>
-          <div><p>coupon</p></div>
-          <div><p>-<span style={{ color: "#F8B602" }}>$</span>{(total * userCtx.couponPercentage / 100).toFixed(2)}</p></div>
-        </div>}
+        {
+          userCtx.hasCoupon && <div className={classes.totalServicePrice}>
+            <div><p>coupon</p></div>
+            <div><p>-<span style={{ color: "#F8B602" }}>$</span>{(total * userCtx.couponPercentage / 100).toFixed(2)}</p></div>
+          </div>
+        }
+        {
+          userCtx.isPremium && <div className={classes.totalServicePrice}>
+            <div><p>Premium</p></div>
+            <div><p>-<span style={{ color: "#F8B602" }}>$</span>{(total * .05).toFixed(2)}</p></div>
+          </div>
+        }
+
         <div className={classes.totalOrderPrice}>
           <div><p>Total</p></div>
-          <div><p>+<span style={{ color: "#F8B602" }}>$</span>{calcedTotalPrice}</p></div>
+          <div><p>+<span style={{ color: "#F8B602" }}>$</span>{calcedTotalPrice.toFixed(2)}</p></div>
         </div>
+        
         {
           userCtx.hasCoupon ?
-            <h5 className={classes.hasCoupon}>You have {userCtx.couponPercentage}% coupon!</h5> :
+            <h5 className={classes.hasCoupon} onClick={() => setRemoveCouponEnable(true)}>You have {userCtx.couponPercentage}% coupon!</h5> :
             <button className={classes.coupon} onClick={() => setEnterCouponEnable(true)}>
               <img src="/coupon.svg" />
               <span>Have a coupon code?</span>
@@ -58,11 +84,23 @@ function Card() {
       >
         <div className={classes.modalContainer}>
           <span>Enter your coupon</span>
-          <form className={classes.modalForm} onSubmit={e => {checkCoupon(e); setEnterCouponEnable(false)}}>
+          <form className={classes.modalForm} onSubmit={e => { checkCoupon(e) }}>
             <input className={classes.modalInput} type="text" name="text" />
-            <input className={classes.modalButton} type="submit" value="Submit" />
+            {isLoading ? <p>fetching...</p> : <button className={classes.modalButton}>Submit</button>}
           </form>
-          <span className={classes.modalError}>error</span>
+          {isError && <span className={classes.modalError}>{error.error}</span>}
+        </div>
+      </Modal>
+      <Modal
+        isOpen={isRemoveCouponEnabled}
+        onClose={() => setRemoveCouponEnable(false)}
+      >
+        <div className={classes.modalContainer}>
+          <h3>Are you sure you want to remove your coupon?</h3>
+          <div className={classes.modalButtonContainer}>
+            <button onClick={() => { setRemoveCouponEnable(false); userCtx.toggleHasCoupon() }}>Remove</button>
+            <button onClick={() => setRemoveCouponEnable(false)}>Cancel</button>
+          </div>
         </div>
       </Modal>
     </>

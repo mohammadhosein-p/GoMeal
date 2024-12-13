@@ -1,8 +1,11 @@
 import { NavLink, useLocation } from "react-router-dom";
 import classes from "./MenuSidebar.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { getUserCtx } from "../../store/userContext";
 import Premium from "../menuBar/Premium";
+import Modal from "../modal/Modal";
+import { isError, useMutation } from "@tanstack/react-query";
+import { sendHttp } from "../../http/sendHttp";
 
 const MenuList = [
   { title: "Dashboard", icon: "dashboard", link: "/" },
@@ -15,6 +18,21 @@ const MenuList = [
 function Menu() {
   const location = useLocation();
   const userCtx = useContext(getUserCtx())
+  const [isUpgradeEnabled, setUpgradeEnabled] = useState(false)
+
+  const { mutate, error, isError, isLoading } = useMutation({
+    mutationKey: ['isPremium'],
+    mutationFn: () => {
+      sendHttp("http://localhost:3000/premium", { name: userCtx.username }, "PUT")
+    },
+    onSuccess: () => {
+      userCtx.toggleHasCoupon(true)
+      setUpgradeEnabled(false)
+    },
+    onError: (err) => {
+      console.log(err)
+    }
+  })
 
   return (
     <div className={classes.container}>
@@ -28,7 +46,7 @@ function Menu() {
           <li key={item.title}>
             <NavLink
               to={item.link}
-              className={({isActive}) => isActive ? classes.active : classes.listItem}
+              className={({ isActive }) => isActive ? classes.active : classes.listItem}
             >
               <img
                 src={`/menuIcon/${item.icon}.svg`}
@@ -41,7 +59,24 @@ function Menu() {
         ))}
       </ul>
 
-      {!userCtx.isPremium && <Premium />}
+      {!userCtx.isPremium && <Premium onUpgrade={() => setUpgradeEnabled(true)} />}
+
+      <Modal
+        isOpen={isUpgradeEnabled}
+        onClose={() => setUpgradeEnabled(false)}
+        className={classes.modal}
+      >
+        <div className={classes.modalContainer}>
+          <h3>Are you sure you want to upgrade your account to Premium?</h3>
+          <div className={classes.modalButtonContainer}>
+            {isLoading ? <p>Fetching...</p> :
+              <button onClick={mutate}>Upgrade</button>}
+            <button onClick={() => setUpgradeEnabled(false)}>Cancel</button>
+          </div>
+          {isError && <span className={classes.modalError}>{error.message}</span>}
+        </div>
+      </Modal>
+
     </div>
   );
 }

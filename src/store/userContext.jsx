@@ -1,5 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable react/prop-types */
 import { useState, createContext } from "react";
 
 const UserContext = createContext({
@@ -26,15 +24,15 @@ export default function UserContextProvider({ children }) {
   const [username, changeUsername] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [balance, changeBalance] = useState(0);
-  const [address, changeAddress] = useState("add your address");
-  const [addressDetail, changeAddressDetail] = useState("add detail to your address with edit detail...");
-  const [isPremium, setIsPremium] = useState(false);
+  const [address, changeAddress] = useState("");
+  const [addressDetail, changeAddressDetail] = useState("");
+  const [isPremium, setIsPremium] = useState(true);
   const [hasCoupon, setHasCoupon] = useState(false);
   const [couponPercentage, setCouponPercentage] = useState(0);
   const [servicePrice, changeServicePrice] = useState(1);
 
   const toggleIsLogged = () => setIsLogged((prev) => !prev);
-  const toggleIsPremium = () => setIsPremium((prev) => !prev);
+  const toggleIsPremium = (status) => setIsPremium(status);
   const toggleHasCoupon = (newPercentage = 0) => {
     setHasCoupon((prev) => !prev);
     setCouponPercentage(!hasCoupon ? newPercentage : 0);
@@ -59,7 +57,7 @@ export default function UserContextProvider({ children }) {
         changeAddressDetail,
         toggleIsPremium,
         toggleHasCoupon,
-        changeServicePrice
+        changeServicePrice      
       }}
     >
       {children}

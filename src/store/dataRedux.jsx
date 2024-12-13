@@ -7,7 +7,7 @@ const initialState = {
   recentOrder: [],
   favorite: [],
   total: 0,
-  userName: "reza4",
+  userName: "reza6",
 }
 
 const dataSlice = createSlice({
@@ -71,7 +71,7 @@ const dataSlice = createSlice({
 
     addRecentOrders(state, action) {
       const orders = action.payload
-      state.recentOrder = [...state.recentOrder, orders]
+      state.recentOrder = [...state?.recentOrder, orders]
     },
     
     addAllCategories(state, action) {
