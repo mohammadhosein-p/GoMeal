@@ -6,14 +6,18 @@ import { useSelector } from "react-redux"
 import Modal from "../../modal/Modal"
 import { useMutation } from "@tanstack/react-query"
 import { sendHttp } from "../../../http/sendHttp"
+import CheckoutModal from "./CheckoutModal"
+import Notification from "../../notification/Notification"
 
 function Card() {
   const [isEnterCouponEnabled, setEnterCouponEnable] = useState(false)
   const [isRemoveCouponEnabled, setRemoveCouponEnable] = useState(false)
+  const [isCheckoutActive, setCheckoutActive] = useState(false)
+  const [message, setMessage] = useState({ isActive: false, title: "", text: "", type: "" })
   const userCtx = useContext(getUserCtx())
   const total = useSelector(state => state.data.total)
   let calcedTotalPrice = total.toFixed(2)
-  calcedTotalPrice -= userCtx.hasCoupon ? (total *( userCtx.couponPercentage / 100)).toFixed(2) : 0;
+  calcedTotalPrice -= userCtx.hasCoupon ? (total * (userCtx.couponPercentage / 100)).toFixed(2) : 0;
   calcedTotalPrice -= userCtx.isPremium ? (total * 0.05).toFixed(2) : 0;
 
   const { mutate, isError, isLoading, error } = useMutation({
@@ -24,6 +28,7 @@ function Card() {
     },
     onSuccess: (result) => {
       userCtx.toggleHasCoupon(result.percentage)
+      setMessage({ isActive: true, title: "Success", type: "success", text: "coupon successfully applied!" })
       setEnterCouponEnable(false)
     },
     onError: (err) => console.log(err),
@@ -33,6 +38,11 @@ function Card() {
     e.preventDefault()
     const data = new FormData(e.target)
     mutate({ coupon: data.get("text") })
+  }
+  const removeCoupon = () => {
+    setRemoveCouponEnable(false); 
+    userCtx.toggleHasCoupon()
+    setMessage({ isActive: true, title: "Success", type:"success", text:"coupon successfully removed"})
   }
 
   return (
@@ -54,7 +64,7 @@ function Card() {
           </div>
         }
         {
-          userCtx.isPremium && <div className={classes.totalServicePrice}>
+          userCtx.isPremium && total > 0 && <div className={classes.totalServicePrice}>
             <div><p>Premium</p></div>
             <div><p>-<span style={{ color: "#F8B602" }}>$</span>{(total * .05).toFixed(2)}</p></div>
           </div>
@@ -62,9 +72,9 @@ function Card() {
 
         <div className={classes.totalOrderPrice}>
           <div><p>Total</p></div>
-          <div><p>+<span style={{ color: "#F8B602" }}>$</span>{calcedTotalPrice.toFixed(2)}</p></div>
+          <div><p>+<span style={{ color: "#F8B602" }}>$</span>{(calcedTotalPrice + userCtx.servicePrice).toFixed(2)}</p></div>
         </div>
-        
+
         {
           userCtx.hasCoupon ?
             <h5 className={classes.hasCoupon} onClick={() => setRemoveCouponEnable(true)}>You have {userCtx.couponPercentage}% coupon!</h5> :
@@ -74,7 +84,7 @@ function Card() {
               <img src="/arrow.svg" style={{ width: ".5rem" }} />
             </button>
         }
-        <button className={classes.checkout}>Checkout</button>
+        <button className={classes.checkout} onClick={() => setCheckoutActive(true)}>Checkout</button>
       </div>
 
       <Modal
@@ -98,11 +108,27 @@ function Card() {
         <div className={classes.modalContainer}>
           <h3>Are you sure you want to remove your coupon?</h3>
           <div className={classes.modalButtonContainer}>
-            <button onClick={() => { setRemoveCouponEnable(false); userCtx.toggleHasCoupon() }}>Remove</button>
+            <button onClick={removeCoupon}>Remove</button>
             <button onClick={() => setRemoveCouponEnable(false)}>Cancel</button>
           </div>
         </div>
       </Modal>
+      <CheckoutModal
+        isOpen={isCheckoutActive}
+        onClose={() => setCheckoutActive(false)}
+        className={classes.checkoutModal}
+        total={(calcedTotalPrice + userCtx.servicePrice).toFixed(2)}
+
+      />
+
+      <Notification
+        isOpen={message.isActive}
+        onClose={() => setMessage({ isActive: false, text: "", title: "", type: "" })}
+        text={message.text}
+        title={message.title}
+        type={message.type}
+      />
+
     </>
   )
 }
