@@ -14,6 +14,11 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    checkout(state) {
+      state.card = []
+      state.total = 0
+    },
+
     addAllFood(state, action) {
       state.foods = action.payload.data.data
     },

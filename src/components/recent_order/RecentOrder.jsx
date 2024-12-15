@@ -14,26 +14,29 @@ function RecentOrder() {
   const [isMaximized, setIsMaximized] = useState(false)
   const [hasError, setHasError] = useState(false)
   let calcedRecent
-  
+
   const toggleMaxmize = () => { setIsMaximized(prevValue => prevValue ? false : true) }
 
-  const {data, isError, isLoading, error} = useQuery({
+  const { data, isError, isLoading, error } = useQuery({
     queryKey: ['recent'],
     queryFn: () => sendHttp("http://localhost:3000/recent", `name=${userName}`),
     onSuccess: data => dispatch(dataActions.addAllRecent(data.recent)),
-    staleTime: 1000 * 60 * 5
+    staleTime: 1000 * 60
   })
 
-  
-  useEffect(()=>{
-    if(isError) setHasError(true)
-    }, [isError])
-  
-  if(data) {
-    calcedRecent = data?.recent.map(order => {
-      const isFavorite = favorite.find(title => order.title == title)
-      return { ...order, isFavorite }
-    })
+
+  useEffect(() => {
+    if (isError) setHasError(true)
+  }, [isError])
+
+  if (data) {
+    console.log(data)
+    calcedRecent = data?.recent
+      .filter(order => order.title)
+      .map(order => {
+        const isFavorite = favorite.find(title => order.title == title)
+        return { ...order, isFavorite }
+      })
   }
 
   return (
@@ -48,22 +51,23 @@ function RecentOrder() {
         </div>
       </div>
 
-      {isLoading && <p style={{display: "block", textAlign: "center"}}>Fetching recent orders...</p>}
+      {isLoading && <p style={{ display: "block", textAlign: "center" }}>Fetching recent orders...</p>}
 
       <ul className={classes.recentCard} style={{ maxHeight: isMaximized ? `${Math.ceil(data.length / 3) * 17.5}rem` : "16rem" }}>
-        {calcedRecent?.map(order => {
-        const date = new Date(order.date)
-        return <RecentOrderItem
-          date={date}
-          image={order.image}
-          isFavorite={order.isFavorite}
-          price={order.price}
-          title={order.title}
-          key={order.title}
-        />})}
+        {calcedRecent?.map((order, index) => {
+          const date = new Date(order.date)
+          return <RecentOrderItem
+            date={date}
+            image={order.image}
+            isFavorite={order.isFavorite}
+            price={order.price}
+            title={order.title}
+            key={index}
+          />
+        })}
       </ul>
 
-      {hasError && <Notification 
+      {hasError && <Notification
         isOpen={hasError}
         onClose={() => setHasError(false)}
         text={error}

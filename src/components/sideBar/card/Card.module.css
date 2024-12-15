@@ -195,3 +195,28 @@
     background-color: white;
     color: #F8B602;
 }
+
+.checkoutModal {
+    width: 20%;
+    background-color: white;
+    padding: .3rem 4rem 4rem 4rem;
+}
+
+.checkoutModal .total {
+    display: inline;
+    color: #b78600;
+    font-weight: 600;
+    font-size: large;
+}
+
+.checkoutModalButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkoutModalButtonContainer button {
+    font-weight: 600;
+    padding: .6rem 1rem;
+}
