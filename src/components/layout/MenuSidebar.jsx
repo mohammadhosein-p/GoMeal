@@ -4,14 +4,14 @@ import { useContext, useState } from "react";
 import { getUserCtx } from "../../store/userContext";
 import Premium from "../menuBar/Premium";
 import Modal from "../modal/Modal";
-import { isError, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { sendHttp } from "../../http/sendHttp";
 
 const MenuList = [
   { title: "Dashboard", icon: "dashboard", link: "/" },
   { title: "Order Food", icon: "foods", link: "/food" },
   { title: "Favorite", icon: "favorite", link: "/favorite" },
-  { title: "Message", icon: "message", link: "/message" },
+  { title: "Contact Us", icon: "message", link: "/contact" },
   { title: "About", icon: "about", link: "/about" },
 ];
 

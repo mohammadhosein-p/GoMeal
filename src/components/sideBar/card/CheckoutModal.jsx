@@ -13,7 +13,8 @@ import queryClient from "../../../query_client/queryClient";
 function CheckoutModal({ isOpen, onClose, className, total }) {
   const card = useSelector((state) => state.data.card);
   const [message, setMessage] = useState({ isActive: false, title: "", text: "", type: "" });
-  const userName = useContext(getUserCtx()).username;
+  const userctx = useContext(getUserCtx());
+  const userName = userctx.username
   const dispatch = useDispatch();
   const { mutate, isError, isLoading, error } = useMutation({
     mutationKey: ["checkout", "recent"],
@@ -21,7 +22,7 @@ function CheckoutModal({ isOpen, onClose, className, total }) {
       const currentDate = new Date()
       const foodToORder = card.map(elem => ({ [elem.title]: elem.count }))
       const foodToLog = card.map(elem => ({ title: elem.title, price: elem.price, image: elem.image, date: currentDate }))
-      console.log(foodToLog)
+      if(total > userctx.balance) throw new Error("you must increase your balance")
       const sendOrder = sendHttp("http://localhost:3000/checkout", { username: userName, order: foodToORder }, "POST")
       const updateLog = sendHttp("http://localhost:3000/recent", { name: userName, recentOrder: foodToLog }, "PUT")
 
@@ -32,8 +33,12 @@ function CheckoutModal({ isOpen, onClose, className, total }) {
         throw error
       }
     },
-    onError: (err) => console.log(err.message),
+    onError: (err) => {
+      setMessage({isActive:true, text:err.message, title:"Error", type:"error"})
+      onClose()
+    },
     onSuccess: () => {
+      userctx.changeBalance(prevValue => prevValue - total)
       dispatch(dataActions.checkout());
       queryClient.invalidateQueries(['recent'])
       onClose();
@@ -47,7 +52,7 @@ function CheckoutModal({ isOpen, onClose, className, total }) {
   });
 
   useEffect(() => {
-    if (isOpen && card.length === 0) {
+    if (isOpen && card.length === 0 ) {
       setMessage({
         isActive: true,
         text: "Card is empty!",
@@ -56,7 +61,7 @@ function CheckoutModal({ isOpen, onClose, className, total }) {
       });
       onClose();
     }
-  }, [isOpen, card, onClose]);
+  }, [isOpen]);
   
 
 
@@ -82,7 +87,7 @@ function CheckoutModal({ isOpen, onClose, className, total }) {
               Cancel
             </button>
           </div>
-          {isError && <p>{error.message}</p>}
+          {/* {isError && <p>{error.message}</p>} */}
         </div>
       </Modal>
 

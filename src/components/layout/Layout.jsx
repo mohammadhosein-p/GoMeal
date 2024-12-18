@@ -35,7 +35,6 @@ function Layout() {
 
 export default Layout
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const loader = async () => {
     const reduxData = store.getState();
     const name = reduxData.data.userName;

@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 5rem 2rem;
+}
+
+.container h3 {
+    font-weight: 700;
+    color: #111;
+}
+
+.container p {
+    font-weight: 500;
+    font-size: 1rem;
+    margin: 1rem;
+    color: #444;
+}
+
+.container span {
+    color: #F8B602;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: .5rem 1rem 2rem 1rem;
+}
+
+h4 {
+    font-size: 1rem;
+}
+
+.creator {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    gap: .7rem;
+}

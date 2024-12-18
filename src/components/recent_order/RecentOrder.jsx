@@ -20,7 +20,7 @@ function RecentOrder() {
   const { data, isError, isLoading, error } = useQuery({
     queryKey: ['recent'],
     queryFn: () => sendHttp("http://localhost:3000/recent", `name=${userName}`),
-    onSuccess: data => dispatch(dataActions.addAllRecent(data.recent)),
+    onSuccess: data => dispatch(dataActions.addAllRecent(data.recent.reverse())),
     staleTime: 1000 * 60
   })
 
@@ -53,7 +53,7 @@ function RecentOrder() {
 
       {isLoading && <p style={{ display: "block", textAlign: "center" }}>Fetching recent orders...</p>}
 
-      <ul className={classes.recentCard} style={{ maxHeight: isMaximized ? `${Math.ceil(data.length / 3) * 17.5}rem` : "16rem" }}>
+      <ul className={classes.recentCard} style={{ maxHeight: isMaximized ? `${Math.ceil(calcedRecent.length / 3) * 17.5}rem` : "16rem" }}>
         {calcedRecent?.map((order, index) => {
           const date = new Date(order.date)
           return <RecentOrderItem
