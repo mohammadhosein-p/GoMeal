@@ -6,6 +6,8 @@ import FavoritePage from "./components/pages/FavoritePage"
 import OrderFood from "./components/pages/OrderFood"
 import ContactPage from "./components/pages/ContactPage"
 import AboutPage from "./components/pages/AboutPage"
+import LoginPage from "./components/pages/LoginPage"
+import SignupPage from "./components/pages/SignupPage"
 
 
 const router = createBrowserRouter([
@@ -31,10 +33,18 @@ const router = createBrowserRouter([
         element: <ContactPage />
       },
       {
-        path:"/about",
-        element:<AboutPage />
+        path: "/about",
+        element: <AboutPage />
       }
     ]
+  },
+  {
+    path: "/login",
+    element: <LoginPage />
+  },
+  {
+    path: "/signup",
+    element: <SignupPage />
   }
 ])
 

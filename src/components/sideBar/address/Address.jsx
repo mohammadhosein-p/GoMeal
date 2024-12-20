@@ -5,8 +5,10 @@ import Modal from "../../modal/Modal"
 import Notification from "../../notification/Notification"
 import { useMutation } from "@tanstack/react-query"
 import { sendHttp } from "../../../http/sendHttp"
+import { useSelector } from "react-redux"
 
 function Address() {
+  const token = useSelector(state => state.data.token)
   const userCtx = useContext(getUserCtx())
   const [isEditDetailActive, setEditModal] = useState(false)
   const [isEditAddressActive, setEditAddress] = useState(false)
@@ -18,7 +20,7 @@ function Address() {
         name: userCtx.username,
         address,
         addressDetail
-      }, "PUT")
+      }, "PUT", token)
       return result
     },
     onSuccess: (result, data) => {

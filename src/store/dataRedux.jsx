@@ -7,13 +7,18 @@ const initialState = {
   recentOrder: [],
   favorite: [],
   total: 0,
-  userName: "reza6",
+  userName: "",
+  token: ""
 }
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    changeToken(state, action) {
+      state.token = action.payload.token
+    },
+
     checkout(state) {
       state.card = []
       state.total = 0

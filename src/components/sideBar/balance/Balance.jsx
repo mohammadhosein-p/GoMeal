@@ -5,8 +5,10 @@ import Modal from "../../modal/Modal"
 import Notification from "../../notification/Notification"
 import { useMutation } from "@tanstack/react-query"
 import { sendHttp } from "../../../http/sendHttp"
+import { useSelector } from "react-redux"
 
 function Balance() {
+  const token = useSelector(state => state.data.token)
   const userCtx = useContext(getUserCtx())
   const [isTopupActive, setTopup] = useState(false)
   const [isTransferActive, setTransfer] = useState(false)
@@ -25,7 +27,7 @@ function Balance() {
       const result = sendHttp("http://localhost:3000/balance", {
         name: userCtx.username,
         balance: data.balance
-      }, "PUT")
+      }, "PUT", token)
       return result
     },
     onSuccess: (result, data) => {

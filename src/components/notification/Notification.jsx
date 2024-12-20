@@ -38,7 +38,7 @@ function Notification({ isOpen, onClose, title, text, type }) {
       style={{ backgroundColor }}
     >
       <h3>{title}</h3>
-      <p color="white">{text}</p>
+      <p>{text?.toString()}</p>
     </div>
   );
 }

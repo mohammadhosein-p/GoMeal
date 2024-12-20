@@ -1,13 +1,21 @@
-export async function sendHttp(url, bodyData = "", method = "GET") {
+export async function sendHttp(url, bodyData = "", method = "GET", token = "") {
     let response;
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    if (token) {
+        headers['authorization'] = token;
+    }
+
     if (method == "GET") {
-        response = await fetch(`${url}?${bodyData}`)
+        response = await fetch(`${url}?${bodyData}`, {
+            headers: headers
+        });
     } else {
         response = await fetch(url, {
             method: method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: headers,
             body: JSON.stringify(bodyData),
         });
     }

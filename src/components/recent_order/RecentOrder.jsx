@@ -10,6 +10,7 @@ import Notification from "../notification/Notification"
 function RecentOrder() {
   const userName = useSelector(state => state.data.userName)
   const favorite = useSelector(state => state.data.favorite)
+  const token = useSelector(state => state.data.token)
   const dispatch = useDispatch()
   const [isMaximized, setIsMaximized] = useState(false)
   const [hasError, setHasError] = useState(false)
@@ -19,7 +20,7 @@ function RecentOrder() {
 
   const { data, isError, isLoading, error } = useQuery({
     queryKey: ['recent'],
-    queryFn: () => sendHttp("http://localhost:3000/recent", `name=${userName}`),
+    queryFn: () => sendHttp("http://localhost:3000/recent", `name=${userName}`, "GET", token),
     onSuccess: data => dispatch(dataActions.addAllRecent(data.recent.reverse())),
     staleTime: 1000 * 60
   })
@@ -30,7 +31,6 @@ function RecentOrder() {
   }, [isError])
 
   if (data) {
-    console.log(data)
     calcedRecent = data?.recent
       .filter(order => order.title)
       .map(order => {

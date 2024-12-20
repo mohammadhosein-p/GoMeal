@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData } from "react-router-dom"
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom"
 import classes from "./Layout.module.css"
 import Menu from "./MenuSidebar"
 import StatusSidebar from "./StatusSidebar"
@@ -13,15 +13,21 @@ function Layout() {
     const loaderData = useLoaderData()
     const userCtx = useContext(getUserCtx())
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    useEffect(()=> {
-        userCtx.changeAddress(loaderData.user.address)
-        userCtx.changeAddressDetail(loaderData.user.addressDetail)
-        userCtx.changeBalance(loaderData.user.balance)
-        userCtx.toggleIsPremium(loaderData.user.isPremium)
-        userCtx.changeUsername(loaderData.user.name)
-        dispatch(dataActions.addRecentOrders(loaderData.user.recentOrder))
-        dispatch(dataActions.addAllFavorite(loaderData.user.favorite))
+    
+    useEffect(() => {
+        if(loaderData.redirect) {
+            navigate(loaderData.redirect)
+        } else {
+            userCtx.changeAddress(loaderData.user.address)
+            userCtx.changeAddressDetail(loaderData.user.addressDetail)
+            userCtx.changeBalance(loaderData.user.balance)
+            userCtx.toggleIsPremium(loaderData.user.isPremium)
+            userCtx.changeUsername(loaderData.user.name)
+            dispatch(dataActions.addRecentOrders(loaderData.user.recentOrder))
+            dispatch(dataActions.addAllFavorite(loaderData.user.favorite))
+        }
     }, [loaderData])
 
     return (
@@ -38,10 +44,15 @@ export default Layout
 export const loader = async () => {
     const reduxData = store.getState();
     const name = reduxData.data.userName;
+    const token = reduxData.data.token
+
+    if (!token) {
+        return { redirect: "/login" }
+    }
 
     const data = await queryClient.fetchQuery({
         queryKey: ["name", "balance", "isPremium", "address", "addressDetail"],
-        queryFn: () => sendHttp("http://localhost:3000/users", `name=${name}`),
+        queryFn: () => sendHttp("http://localhost:3000/users", `name=${name}`, "GET", token),
         staleTime: 10 * 60 * 1000,
     });
 
