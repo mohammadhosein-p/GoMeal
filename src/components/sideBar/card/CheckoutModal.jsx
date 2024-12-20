@@ -53,7 +53,7 @@ function CheckoutModal({ isOpen, onClose, className, total }) {
   });
 
   useEffect(() => {
-    if (isOpen && card.length === 0 ) {
+    if (isOpen && card.length === 0) {
       setMessage({
         isActive: true,
         text: "Card is empty!",
