@@ -1,0 +1,41 @@
+{
+    "data" : [
+        {
+            "image": "/card/hamber.png",
+            "stars": 5,
+            "title": "pizza",
+            "price": 5,
+            "isPopular": true,
+            "offerPercentage": 15,
+            "category": "pizza"
+        },
+        
+        {
+            "image": "/card/hamber.png",
+            "stars": 3,
+            "title": "hamber2",
+            "price": 10,
+            "isPopular": true,
+            "offerPercentage": 20,
+            "category": "burger"
+        },
+        {
+            "image": "/card/hamber.png",
+            "stars": 3,
+            "title": "hamber4",
+            "price": 10,
+            "isPopular": true,
+            "offerPercentage": 20,
+            "category": "burger"
+        },
+        {
+            "image": "/card/hamber.png",
+            "stars": 4,
+            "title": "hamber3",
+            "price": 15,
+            "isPopular": true,
+            "offerPercentage": 0,
+            "category": "burger"
+        }
+    ]
+}
