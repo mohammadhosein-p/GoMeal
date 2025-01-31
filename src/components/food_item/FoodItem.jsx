@@ -1,14 +1,38 @@
 /* eslint-disable react/prop-types */
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import classes from "./FoodItem.module.css"
 import { dataActions } from "../../store/dataRedux"
+import { useEffect } from "react"
+import { useMutation } from "@tanstack/react-query"
+import { sendHttp } from "../../http/sendHttp"
 
 function FoodItem({ image, stars, title, price, isFavorite, isOrdered, offerPercentage, isPopular, toggleCard, count }) {
   const dispatch = useDispatch()
+  const { token, userName, favorite } = useSelector(state => state.data)
+
+  const { mutate } = useMutation({
+    mutationKey: ["favorite"],
+    mutationFn: async (favoriteList) => {
+      const result = await sendHttp("http://localhost:3000/favorite", { name: userName, favorite: favoriteList }, "PUT", token)
+      return result
+    },
+    onSuccess: () => {
+      dispatch(dataActions.toggleFavorite(title))
+    },
+    onError: (err) => {
+      console.error("Failed to update favorite:", err)
+    }
+  })
+
   const toggleFavorite = () => {
-    dispatch(dataActions.toggleFavorite(title))
+    if(isFavorite) {
+      const newFavorite = favorite.filter(food => food !== title)
+      mutate(newFavorite)
+    } else {
+      mutate([...favorite, title])
+    }
   }
-  
+
   return (
     <li className={classes.cardLi}>
       <div onClick={toggleFavorite}>

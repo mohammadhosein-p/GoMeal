@@ -36,7 +36,6 @@ const generateToken = async () => {
 
 const validateToken = (req, res, next) => {
     const token = req.headers['authorization'];
-    console.log(token)
 
     if (!token) {
         return res.status(401).send({ message: "Authorization token is required." });
@@ -167,15 +166,12 @@ app.get("/category", (req, res) => {
 
 app.get('/recent', validateToken, async (req, res) => {
     try {
-        console.log(req.query)
         const user = await User.findOne({ name: req.query.name });
         if (!user) {
             return res.status(404).send({ error: "user does not exist!" })
         }
-        console.log(user)
         return res.status(201).send({ recent: user.recentOrder });
     } catch (err) {
-        console.log(err.message)
         return res.status(500).send({ error: err.message });
     }
 });
@@ -213,7 +209,6 @@ app.get("/coupon", (req, res) => {
 
 app.get('/users', validateToken, async (req, res) => {
     try {
-        console.log(req.query)
         const user = await User.findOne({ name: req.query.name });
         if (!user) {
             return res.status(404).send({ error: "user does not exist!" })
@@ -262,7 +257,6 @@ app.put("/address", validateToken, async (req, res) => {
             return res.status(404).send({ error: "user does not exist!" })
         }
         const result = await User.updateOne({ name }, { address, addressDetail })
-        console.log(result)
         return res.status(201).send(result)
     } catch (error) {
         return res.status(500).send({ error: err.message })
@@ -290,6 +284,7 @@ app.put("/favorite", validateToken, async (req, res) => {
         return res.status(400).send({ error: "Name is required for login." });
     }
     const { name, favorite } = req.body
+    console.log(req.body)
     try {
         const user = await User.findOne({ name })
         if (!user) {
@@ -336,13 +331,11 @@ app.put("/recent", validateToken, async (req, res) => {
 
 
 app.put("/premium", validateToken, async (req, res) => {
-    console.log(req.body)
     if (!req.body.name) {
         return res.status(400).send({ message: "Name is required" })
     }
     try {
         const name = req.body.name
-        console.log(name)
         const user = await User.findOne({ name })
         if (!user) {
             return res.status(400).send({ message: "user doesnot exists" })
@@ -351,7 +344,6 @@ app.put("/premium", validateToken, async (req, res) => {
             return res.status(401).send({ message: "user already has premium" })
         }
         const result = await User.updateOne({ name }, { isPremium: true })
-        console.log(result)
         return res.status(201).send(result)
     } catch {
         return res.status(500).send({ message: err.message })
@@ -395,7 +387,6 @@ app.post("/checkout", validateToken, (req, res) => {
 app.put("/message", (req, res) => {
     const filePath = path.join(__dirname, "message.json");
     const newMessage = req.body;
-    console.log(newMessage)
 
     if (!newMessage || Object.keys(newMessage).length === 0) {
         return res.status(400).send({ error: "Request body is empty or invalid." });

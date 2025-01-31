@@ -1,41 +1,229 @@
 {
     "data" : [
         {
-            "image": "/card/hamber.png",
+            "image": "/food/pizza/BBQ_chicken.jpg",
             "stars": 5,
-            "title": "pizza",
-            "price": 5,
+            "title": "BBQ Chiken",
+            "price": 8,
             "isPopular": true,
-            "offerPercentage": 15,
+            "offerPercentage": 20,
             "category": "pizza"
         },
-        
         {
-            "image": "/card/hamber.png",
+            "image": "/food/pizza/hawaiian.jpg",
             "stars": 3,
-            "title": "hamber2",
-            "price": 10,
-            "isPopular": true,
-            "offerPercentage": 20,
-            "category": "burger"
+            "title": "Hawaiian Pizza",
+            "price": 6,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "pizza"
         },
         {
-            "image": "/card/hamber.png",
-            "stars": 3,
-            "title": "hamber4",
+            "image": "/food/pizza/margherita.jpg",
+            "stars": 5,
+            "title": "Margherita",
             "price": 10,
             "isPopular": true,
-            "offerPercentage": 20,
-            "category": "burger"
+            "offerPercentage": 5,
+            "category": "pizza"
         },
         {
-            "image": "/card/hamber.png",
+            "image": "/food/pizza/meat_lover’s.jpg",
+            "stars": 5,
+            "title": "Meat Lover's",
+            "price": 10,
+            "isPopular": true,
+            "offerPercentage": 5,
+            "category": "pizza"
+        },
+        {
+            "image": "/food/pizza/pepperoni.jpg",
+            "stars": 5,
+            "title": "Pepperoni",
+            "price": 7,
+            "isPopular": true,
+            "offerPercentage": 5,
+            "category": "pizza"
+        },
+        {
+            "image": "/food/pizza/veggie.jpg",
+            "stars": 3,
+            "title": "Veggie Pizza",
+            "price": 7,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "pizza"
+        },
+        {
+            "image": "/food/burger/bacon.jpg",
             "stars": 4,
-            "title": "hamber3",
-            "price": 15,
+            "title": "Bacon Burger",
+            "price": 6,
             "isPopular": true,
+            "offerPercentage": 10,
+            "category": "burger"
+        },
+        {
+            "image": "/food/burger/california.jpg",
+            "stars": 3,
+            "title": "california",
+            "price": 8,
+            "isPopular": false,
             "offerPercentage": 0,
             "category": "burger"
+        },
+        {
+            "image": "/food/burger/cheeseburger.jpg",
+            "stars": 5,
+            "title": "Cheese Burger",
+            "price": 10,
+            "isPopular": true,
+            "offerPercentage": 20,
+            "category": "burger"
+        },
+        {
+            "image": "/food/burger/hamburger.jpg",
+            "stars": 5,
+            "title": "Hamburger",
+            "price": 7,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "burger"
+        },
+        {
+            "image": "/food/burger/western_BBQ.jpg",
+            "stars": 4,
+            "title": "Western BBQ",
+            "price": 8,
+            "isPopular": true,
+            "offerPercentage": 10,
+            "category": "burger"
+        },
+        {
+            "image": "/food/chicken/tenders.webp",
+            "stars": 5,
+            "title": "Chicken Tenders",
+            "price": 7,
+            "isPopular": true,
+            "offerPercentage": 15,
+            "category": "chicken"
+        },
+        {
+            "image": "/food/chicken/fried.jpg",
+            "stars": 5,
+            "title": "Fried Chicken",
+            "price": 4,
+            "isPopular": true,
+            "offerPercentage": 5,
+            "category": "chicken"
+        },
+        {
+            "image": "/food/chicken/grilled.jpg",
+            "stars": 3,
+            "title": "Grilled",
+            "price": 4,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "chicken"
+        },
+        {
+            "image": "/food/chicken/shawarma.jpg",
+            "stars": 3,
+            "title": "Shawarma",
+            "price": 6,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "chicken"
+        },
+        {
+            "image": "/food/chicken/tandoori.jpg",
+            "stars": 5,
+            "title": "Tandoori",
+            "price": 10,
+            "isPopular": true,
+            "offerPercentage": 10,
+            "category": "chicken"
+        },
+        {
+            "image": "/food/bakery/cheesecake.webp",
+            "stars": 4,
+            "title": "Cheese Cake",
+            "price": 10,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "bakery"
+        },
+        {
+            "image": "/food/bakery/croissant.avif",
+            "stars": 5,
+            "title": "Croissant",
+            "price": 5.5,
+            "isPopular": true,
+            "offerPercentage": 5,
+            "category": "bakery"
+        },
+        {
+            "image": "/food/bakery/macarons.jpg",
+            "stars": 3,
+            "title": "Macarons",
+            "price": 7,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "bakery"
+        },
+        {
+            "image": "/food/caffee/americano.webp",
+            "stars": 3,
+            "title": "Americano Caffee",
+            "price": 3,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "caffee"
+        },
+        {
+            "image": "/food/caffee/macchiato.webp",
+            "stars": 3,
+            "title": "Macchiato Caffee",
+            "price": 3.5,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "caffee"
+        },
+        {
+            "image": "/food/caffee/espresso.webp",
+            "stars": 4,
+            "title": "Espresso",
+            "price": 3,
+            "isPopular": true,
+            "offerPercentage": 10,
+            "category": "caffee"
+        },
+        {
+            "image": "/food/fish/caviar.jpg",
+            "stars": 5,
+            "title": "Caviar",
+            "price": 15,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "fish"
+        },
+        {
+            "image": "/food/fish/salmon.jpg",
+            "stars": 4,
+            "title": "Salmon",
+            "price": 5,
+            "isPopular": true,
+            "offerPercentage": 10,
+            "category": "fish"
+        },
+        {
+            "image": "/food/fish/tialpia.jpg",
+            "stars": 3,
+            "title": "Tialpia",
+            "price": 6.5,
+            "isPopular": false,
+            "offerPercentage": 0,
+            "category": "fish"
         }
     ]
 }

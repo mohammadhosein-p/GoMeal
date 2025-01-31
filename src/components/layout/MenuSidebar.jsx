@@ -6,6 +6,7 @@ import Premium from "../menuBar/Premium";
 import Modal from "../modal/Modal";
 import { useMutation } from "@tanstack/react-query";
 import { sendHttp } from "../../http/sendHttp";
+import { useSelector } from "react-redux";
 
 const MenuList = [
   { title: "Dashboard", icon: "dashboard", link: "/" },
@@ -16,6 +17,7 @@ const MenuList = [
 ];
 
 function Menu() {
+  const token = useSelector(state => state.data.token)
   const location = useLocation();
   const userCtx = useContext(getUserCtx())
   const [isUpgradeEnabled, setUpgradeEnabled] = useState(false)
@@ -23,10 +25,10 @@ function Menu() {
   const { mutate, error, isError, isLoading } = useMutation({
     mutationKey: ['isPremium'],
     mutationFn: () => {
-      sendHttp("http://localhost:3000/premium", { name: userCtx.username }, "PUT")
+      sendHttp("http://localhost:3000/premium", { name: userCtx.username }, "PUT", token)
     },
     onSuccess: () => {
-      userCtx.toggleHasCoupon(true)
+      userCtx.toggleIsPremium(true)
       setUpgradeEnabled(false)
     },
     onError: (err) => {

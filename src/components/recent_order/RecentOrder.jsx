@@ -21,7 +21,7 @@ function RecentOrder() {
   const { data, isError, isLoading, error } = useQuery({
     queryKey: ['recent'],
     queryFn: () => sendHttp("http://localhost:3000/recent", `name=${userName}`, "GET", token),
-    onSuccess: data => dispatch(dataActions.addAllRecent(data.recent.reverse())),
+      onSuccess: data => dispatch(dataActions.addAllRecent(data.recent.reverse())),
     staleTime: 1000 * 60
   })
 

@@ -24,7 +24,9 @@
 }
 
 .recentFoodImage {
-    width: 13rem;
+    width: 10rem;
+    height: 10rem;
+    object-fit: scale-down;
 }
 
 .recentCard li h3 {
